@@ -1,0 +1,58 @@
+{
+    "name": "usmanjutt84/internal_video",
+    "description": "Provides custom implementations for the video from the Internal source.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "homepage": "https://github.com/usmanjutt84/internal_video",
+    "authors": [
+        {
+            "name": "Muhammad Usman (usmanjutt84)",
+            "homepage": "https://github.com/usmanjutt84",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/usmanjutt84/internal_video/issues",
+        "source": "https://github.com/usmanjutt84/internal_video",
+        "docs": "https://github.com/usmanjutt84/internal_video"
+    },
+    "require": {
+        "videojs/videojs": "*",
+        "videojs/themes": "*"
+    },
+    "repositories": {
+        "videojs": {
+            "type": "package",
+            "package": {
+                "name": "videojs/videojs",
+                "version": "8.12.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "video.js"
+                },
+                "dist": {
+                    "url": "https://registry.npmjs.org/video.js/-/video.js-8.12.0.tgz",
+                    "type": "tar"
+                },
+                "license": "MIT"
+            }
+        },
+        "videojs.themes": {
+            "type": "package",
+            "package": {
+                "name": "videojs/themes",
+                "version": "1.0.0",
+                "type": "drupal-library",
+                "extra": {
+                    "installer-name": "videojs-themes"
+                },
+                "dist": {
+                    "url": "https://github.com/videojs/themes/archive/refs/heads/master.zip",
+                    "type": "zip"
+                },
+                "license": "MIT"
+            }
+        }
+    }
+}

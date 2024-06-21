@@ -1,0 +1,8 @@
+name: 'Internal video'
+type: module
+description: 'Provides implementations for Internal video from another internal source.'
+package: Field types
+core_version_requirement: ^9.4 || ^10
+dependencies:
+  - drupal:field
+configure: internal_video.settings

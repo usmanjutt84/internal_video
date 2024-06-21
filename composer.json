@@ -1,0 +1,24 @@
+{
+    "name": "usmanjutt84/internal_video",
+    "description": "Provides custom implementations for the video from the Internal source.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "minimum-stability": "dev",
+    "homepage": "https://github.com/usmanjutt84/internal_video",
+    "authors": [
+        {
+            "name": "Muhammad Usman (usmanjutt84)",
+            "homepage": "https://github.com/usmanjutt84",
+            "role": "Maintainer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/usmanjutt84/internal_video/issues",
+        "source": "https://github.com/usmanjutt84/internal_video",
+        "docs": "https://github.com/usmanjutt84/internal_video"
+    },
+    "require": {
+        "drupal/core": "^9.4 || ^10",
+        "php": ">=8.1"
+    }
+}

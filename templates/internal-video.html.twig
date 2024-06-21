@@ -1,0 +1,62 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display an embedded Internal video.
+ *
+ * Available variables:
+ * - video_id: The ID of the Internal video. Used to construct the iframe's src.
+ * - entity_title: The title of the entity with the Internal video field value.
+ * - settings: An array of settings selected in the formatter.
+ *    - video_size
+ *    - video_width
+ *    - video_height
+ *    - video_autoplay
+ *    - video_mute
+ *    - video_loop
+ *    - video_controls
+ *    - video_autohide
+ *    - video_load_policy
+ * - content_attributes: array of HTML attributes populated by modules, intended
+ *   to be added to the iframe of the embedded Internal video player.
+ *   - src: The URL of the Internal video to be embedded. Contains a query string
+ *     with parameter values derived from options selected in the module's
+ *     configuration and the field's display settings.
+ *   - width: A pixel or percentage value, derived from the display settings.
+ *   - height: A pixel or percentage value, derived from the display settings.
+ *   - id: A valid HTML ID and guaranteed unique.
+ *   - title: A title value, assigned for accessibility.
+ * - attributes: array of HTML attributes populated by modules, intended to be
+ *   added to the element wrapping the embedded Internal video player.
+ *
+ * @see template_preprocess_internal_video()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if value %}
+  <figure{{ attributes }}>
+    <video
+      id="my-video"
+      class="video-js vjs-fluid"
+      controls=true
+      preload="auto"
+      width="640"
+      height="264"
+      {# poster="https://placehold.co/600x400" TODO - Need to get the thumbnai yet  #}
+      data-setup="{}"
+    >
+      <source src={{ value }} type="video/mp4" />
+      {# <source src="MY_VIDEO.webm" type="video/webm" /> #}
+      <p class="vjs-no-js">
+        To view this video please enable JavaScript, and consider upgrading to a
+        web browser that
+        <a href="https://videojs.com/html5-video-support/" target="_blank"
+          >supports HTML5 video</a
+        >
+      </p>
+    </video>
+    {# {{ value }} #}
+    {# <iframe{{ content_attributes }} allowfullscreen></iframe> #}
+  </figure>
+{% endif %}
+

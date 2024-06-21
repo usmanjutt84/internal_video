@@ -1,0 +1,5 @@
+internal_video.internal_video.settings:
+  title: 'Internal video field settings'
+  description: 'Configure global settings for Internal video fields.'
+  parent: system.admin_config_media
+  route_name: internal_video.settings

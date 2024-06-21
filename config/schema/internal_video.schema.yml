@@ -1,0 +1,52 @@
+# Schema for the configuration files of the Internal video module.
+
+internal_video.settings:
+  type: config_object
+  label: 'internal video settings'
+  mapping:
+    source_domain:
+      type: string
+      label: 'Source domain'
+    allowed_extensions:
+      type: string
+      label: 'Comma separated list of allowed extensions'
+
+field.widget.settings.internal_video:
+  type: mapping
+  label: 'Internal widget settings'
+  mapping:
+    placeholder_url:
+      type: string
+      label: 'Placeholder URL'
+
+field.formatter.settings.internal_video:
+  type: mapping
+  label: 'Internal video formatter settings'
+  mapping:
+    video_size:
+      type: string
+      label: 'Internal video size'
+    video_width:
+      type: string
+      label: 'Internal width'
+    video_height:
+      type: string
+      label: 'Internal height'
+    video_autoplay:
+      type: boolean
+      label: 'Play video automatically when loaded'
+    video_mute:
+      type: boolean
+      label: 'Mute video by default when loaded'
+    video_loop:
+      type: boolean
+      label: 'Loop the playback of the video'
+    video_controls:
+      type: boolean
+      label: 'Always hide video controls'
+    video_autohide:
+      type: boolean
+      label: 'Hide video controls after play begins'
+    video_load_policy: # TODO: Remove?
+      type: boolean
+      label: 'Hide video annotations by default'

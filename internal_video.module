@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * @file
+ * Internal field field module adds a field for Internal videos.
+ */
+
+ /**
+ * Implements hook_theme().
+ */
+function internal_video_theme($existing, $type, $theme, $path) {
+  return [
+    'internal_video' => [
+      'variables' => [
+        'value' => NULL,
+        'entity_title' => NULL,
+        'settings' => [],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Returns a list of standard video sizes.
+ */
+function _internal_video_size_options() {
+  return [
+    '450x315' => '450px by 315px',
+    '480x360' => '480px by 360px',
+    '640x480' => '640px by 480px',
+    '960x720' => '960px by 720px',
+    'responsive' => 'responsive (full-width of container)',
+    'custom' => 'custom',
+  ];
+}
+
+/**
+ * Prepares variables for the Internal Video template.
+ *
+ * Default template: internal-video.html.twig.
+ */
+function template_preprocess_internal_video(&$variables) {
+  // Use the field's display settings to retrieve the video's dimensions.
+  $size = $variables['settings']['video_size'];
+  $width = $variables['settings']['video_width'];
+  $height = $variables['settings']['video_height'];
+
+  if ($size != 'responsive') {
+    $dimensions = _internal_video_get_dimensions($size, $width, $height);
+    // Assign the retrieved dimensions as attributes on the iframe element.
+    $variables['content_attributes']['width'] = $dimensions['width'];
+    $variables['content_attributes']['height'] = $dimensions['height'];
+  }
+
+  $variables['attributes']['class'][] = 'video-container';
+  if ($size == 'responsive') {
+    // When the "responsive" size is chosen in the field's display settings,
+    // this class is used by the module's CSS to make the player responsive.
+    $variables['attributes']['class'][] = 'video-container--responsive';
+  }
+}
+
+/**
+ * Splits height and width when given size, as from _internal_video_size_options().
+ *
+ * @param string $size
+ *   Image size.
+ * @param string $width
+ *   Image width.
+ * @param string $height
+ *   Image height.
+ *
+ * @return array
+ *   An array containing the dimensions.
+ */
+function _internal_video_get_dimensions($size = NULL, $width = NULL, $height = NULL) {
+  $dimensions = [];
+  if ($size == 'custom') {
+    $dimensions['width'] = (int) $width;
+    $dimensions['height'] = (int) $height;
+  }
+  else {
+    // Locate the 'x'.
+    $strpos = strpos($size, 'x');
+    // Width is the first dimension.
+    $dimensions['width'] = substr($size, 0, $strpos);
+    // Height is the second dimension.
+    $dimensions['height'] = substr($size, $strpos + 1, strlen($size));
+  }
+
+  return $dimensions;
+}

@@ -1,0 +1,7 @@
+internal_video.settings:
+  path: '/admin/config/media/internal-video'
+  defaults:
+    _form: '\Drupal\internal_video\Form\InternalVideoSettingsForm'
+    _title: 'Internal video Settings'
+  requirements:
+    _permission: 'administer internal video'

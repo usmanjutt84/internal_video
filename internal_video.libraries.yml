@@ -1,0 +1,7 @@
+internal_video.videojs:
+  version: VERSION
+  css:
+    theme:
+      /libraries/video.js/dist/video-js.css: {}
+  js:
+    /libraries/video.js/dist/video.min.js: {}

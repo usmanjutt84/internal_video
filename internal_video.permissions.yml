@@ -1,0 +1,4 @@
+administer internal video:
+  title: 'Administer internal fields'
+  description: 'Administer access to module'
+  restrict access: true
