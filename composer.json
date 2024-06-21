@@ -3,7 +3,6 @@
     "description": "Provides custom implementations for the video from the Internal source.",
     "type": "drupal-module",
     "license": "GPL-2.0-or-later",
-    "minimum-stability": "dev",
     "homepage": "https://github.com/usmanjutt84/internal_video",
     "authors": [
         {
