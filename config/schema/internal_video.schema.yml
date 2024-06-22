@@ -47,6 +47,3 @@ field.formatter.settings.internal_video:
     video_autohide:
       type: boolean
       label: 'Hide video controls after play begins'
-    video_load_policy: # TODO: Remove?
-      type: boolean
-      label: 'Hide video annotations by default'
