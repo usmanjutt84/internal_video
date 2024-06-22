@@ -18,42 +18,6 @@
     },
     "require": {
         "drupal/core": "^9.4 || ^10",
-        "php": ">=8.1",
-        "videojs/videojs": "*",
-        "videojs/themes": "*"
-    },
-    "repositories": {
-        "videojs": {
-            "type": "package",
-            "package": {
-                "name": "videojs/videojs",
-                "version": "8.12.0",
-                "type": "drupal-library",
-                "extra": {
-                    "installer-name": "video.js"
-                },
-                "dist": {
-                    "url": "https://registry.npmjs.org/video.js/-/video.js-8.12.0.tgz",
-                    "type": "tar"
-                },
-                "license": "MIT"
-            }
-        },
-        "videojs.themes": {
-            "type": "package",
-            "package": {
-                "name": "videojs/themes",
-                "version": "1.0.0",
-                "type": "drupal-library",
-                "extra": {
-                    "installer-name": "videojs-themes"
-                },
-                "dist": {
-                    "url": "https://github.com/videojs/themes/archive/refs/heads/master.zip",
-                    "type": "zip"
-                },
-                "license": "MIT"
-            }
-        }
+        "php": ">=8.1"
     }
 }
