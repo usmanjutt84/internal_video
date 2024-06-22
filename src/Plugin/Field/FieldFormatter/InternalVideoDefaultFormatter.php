@@ -33,7 +33,6 @@ class InternalVideoDefaultFormatter extends FormatterBase {
       'video_loop' => '',
       'video_controls' => '',
       'video_autohide' => '',
-      'video_load_policy' => '', // TODO: remove?
     ] + parent::defaultSettings();
   }
 
@@ -43,75 +42,10 @@ class InternalVideoDefaultFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
 
-    $elements['video_theme'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Theme'),
-      '#options' => [
-        'city' => $this->t('City'),
-        'fantasy' => $this->t('Fantasy'),
-        'forest' => $this->t('Forest'),
-        'sea' => $this->t('Sea'),
-      ],
-      '#default_value' => $this->getSetting('video_theme'),
-    ];
-    $elements['video_size'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Internal video size'),
-      '#options' => _internal_video_size_options(),
-      '#default_value' => $this->getSetting('video_size'),
-    ];
-    $elements['video_width'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Width'),
-      '#size' => 10,
-      '#default_value' => $this->getSetting('video_width'),
-      '#states' => [
-        'visible' => [
-          ':input[name*="video_size"]' => ['value' => 'custom'],
-        ],
-      ],
-    ];
-    $elements['video_height'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Height'),
-      '#size' => 10,
-      '#default_value' => $this->getSetting('video_height'),
-      '#states' => [
-        'visible' => [
-          ':input[name*="video_size"]' => ['value' => 'custom'],
-        ],
-      ],
-    ];
-    $elements['video_autoplay'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Play video automatically when loaded (autoplay).'),
-      '#default_value' => $this->getSetting('video_autoplay'),
-    ];
-    $elements['video_mute'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Mute video by default when loaded (mute).'),
-      '#default_value' => $this->getSetting('video_mute'),
-    ];
-    $elements['video_loop'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Loop the playback of the video (loop).'),
-      '#default_value' => $this->getSetting('video_loop'),
-    ];
-    $elements['video_controls'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Always hide video controls (controls).'),
-      '#default_value' => $this->getSetting('video_controls'),
-    ];
-    $elements['video_autohide'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Hide video controls after play begins (autohide).'),
-      '#default_value' => $this->getSetting('video_autohide'),
-    ];
-    $elements['video_load_policy'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Hide video annotations by default (iv_load_policy).'),
-      '#default_value' => $this->getSetting('video_load_policy'),
-    ];
+    foreach ($this->getFields() as $key => $field) {
+      $elements[$key] = $field;
+    }
+
     return $elements;
   }
 
@@ -120,29 +54,12 @@ class InternalVideoDefaultFormatter extends FormatterBase {
    */
   public function settingsSummary() {
     $summary = [];
-    $cp = '';
-    $video_size = $this->getSetting('video_size');
+    $settings = $this->getSettings();
+    $fields = $this->getFields();
 
-    $parameters = [
-      $this->getSetting('video_autoplay'),
-      $this->getSetting('video_mute'),
-      $this->getSetting('video_loop'),
-      $this->getSetting('video_controls'),
-      $this->getSetting('video_autohide'),
-      $this->getSetting('video_load_policy'),
-    ];
-
-    foreach ($parameters as $parameter) {
-      if ($parameter) {
-        $cp = ', custom parameters';
-        break;
-      }
+    foreach ($fields as $key => $field) {
+      $summary[] = $field['#title'].': '.$settings[$key];
     }
-    $summary[] = $this->t('Internal video: @video_size@cp', [
-      '@video_size' => $video_size,
-      '@cp' => $cp,
-    ]);
-
 
     return $summary;
   }
@@ -183,4 +100,82 @@ class InternalVideoDefaultFormatter extends FormatterBase {
     return $element;
   }
 
+  /**
+   * Get all custom fields for the specified format
+   */
+  protected function getFields() {
+    $elements = [];
+
+    $elements['video_theme'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Theme'),
+      '#options' => [
+        'city' => $this->t('City'),
+        'fantasy' => $this->t('Fantasy'),
+        'forest' => $this->t('Forest'),
+        'sea' => $this->t('Sea'),
+      ],
+      '#default_value' => $this->getSetting('video_theme'),
+    ];
+    $elements['video_size'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Size'),
+      '#options' => _internal_video_size_options(),
+      '#default_value' => $this->getSetting('video_size'),
+    ];
+    $elements['video_width'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Width'),
+      '#size' => 10,
+      '#default_value' => $this->getSetting('video_width'),
+      '#states' => [
+        'visible' => [
+          ':input[name*="video_size"]' => ['value' => 'custom'],
+        ],
+      ],
+    ];
+    $elements['video_height'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Height'),
+      '#size' => 10,
+      '#default_value' => $this->getSetting('video_height'),
+      '#states' => [
+        'visible' => [
+          ':input[name*="video_size"]' => ['value' => 'custom'],
+        ],
+      ],
+    ];
+    $elements['video_autoplay'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Autoplay'),
+      '#description' => $this->t('Play video automatically when loaded (autoplay).'),
+      '#default_value' => $this->getSetting('video_autoplay'),
+    ];
+    $elements['video_mute'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Mute'),
+      '#description' => $this->t('Mute video by default when loaded (mute).'),
+      '#default_value' => $this->getSetting('video_mute'),
+    ];
+    $elements['video_loop'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Loop'),
+      '#description' => $this->t('Loop the playback of the video (loop).'),
+      '#default_value' => $this->getSetting('video_loop'),
+    ];
+    $elements['video_controls'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Controls'),
+      '#description' => $this->t('Always hide video controls (controls).'),
+      '#default_value' => $this->getSetting('video_controls'),
+    ];
+    $elements['video_autohide'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Autohide'),
+      '#description' => $this->t('Hide video controls after play begins (autohide).'),
+      '#default_value' => $this->getSetting('video_autohide'),
+    ];
+
+    return $elements;
+  }
 }
