@@ -24,6 +24,7 @@ class InternalVideoDefaultFormatter extends FormatterBase {
    */
   public static function defaultSettings() {
     return [
+      'video_theme' => 'city',
       'video_size' => '450x315',
       'video_width' => '',
       'video_height' => '',
@@ -42,6 +43,17 @@ class InternalVideoDefaultFormatter extends FormatterBase {
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $elements = parent::settingsForm($form, $form_state);
 
+    $elements['video_theme'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Theme'),
+      '#options' => [
+        'city' => $this->t('City'),
+        'fantasy' => $this->t('Fantasy'),
+        'forest' => $this->t('Forest'),
+        'sea' => $this->t('Sea'),
+      ],
+      '#default_value' => $this->getSetting('video_theme'),
+    ];
     $elements['video_size'] = [
       '#type' => 'select',
       '#title' => $this->t('Internal video size'),
@@ -130,6 +142,8 @@ class InternalVideoDefaultFormatter extends FormatterBase {
       '@video_size' => $video_size,
       '@cp' => $cp,
     ]);
+
+
     return $summary;
   }
 
@@ -153,7 +167,14 @@ class InternalVideoDefaultFormatter extends FormatterBase {
         '#settings' => $settings,
       ];
 
+      // Attach videoJS to the element
       $element[$delta]['#attached']['library'][] = 'internal_video/internal_video.videojs';
+
+      // Attach videoJS theme to the element
+      if ($theme = $settings['video_theme']) {
+        $element[$delta]['#attached']['library'][] = 'internal_video/internal_video.theme.'.$theme;
+      }
+
 
       if ($settings['video_size'] == 'responsive') { // TODO: remove?
         // $element[$delta]['#attached']['library'][] = 'youtube/drupal.youtube.responsive';
