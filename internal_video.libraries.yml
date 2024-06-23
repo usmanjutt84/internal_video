@@ -30,3 +30,11 @@ internal_video.theme.sea:
     theme:
       /libraries/videojs-themes/sea/index.css: {}
 
+internal_video.tracking:
+  version: VERSION
+  js:
+    js/tracking.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once
