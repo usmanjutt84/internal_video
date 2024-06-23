@@ -1,2 +1,3 @@
 source_domain: "http://www.example.com"
 allowed_extensions: "mp4"
+wait_time: 5000

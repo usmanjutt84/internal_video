@@ -59,6 +59,15 @@ class InternalVideoSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Comma separated list of allowed extensions without dots e.g "mp4, webm"'),
     ];
 
+    $form['wait_time'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Wait time'),
+      '#default_value' => $config->get('wait_time') ? $config->get('wait_time') : 5000,
+      '#placeholder' => '5000',
+      '#required' => true,
+      '#description' => $this->t('Enter wait time in milliseconds. After click on play, Drupal will wait before the video is tracked. 1 second = 1000 milliseconds'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -70,6 +79,7 @@ class InternalVideoSettingsForm extends ConfigFormBase {
     $this->configFactory->getEditable(static::SETTINGS)
       ->set('source_domain', $values['source_domain'])
       ->set('allowed_extensions', $values['allowed_extensions'])
+      ->set('wait_time', $values['wait_time'])
       ->save();
 
     parent::submitForm($form, $form_state);
