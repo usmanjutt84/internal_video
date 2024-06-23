@@ -10,6 +10,9 @@ internal_video.settings:
     allowed_extensions:
       type: string
       label: 'Comma separated list of allowed extensions'
+    wait_time:
+      type: number
+      label: 'Time to wait before tracking the video'
 
 field.widget.settings.internal_video:
   type: mapping
