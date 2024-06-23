@@ -12,9 +12,10 @@ function internal_video_theme($existing, $type, $theme, $path) {
   return [
     'internal_video' => [
       'variables' => [
-        'value' => NULL,
+        'video' => [],
         'entity_title' => NULL,
         'settings' => [],
+        'tracking_id' => NULL,
       ],
     ],
   ];
@@ -48,16 +49,16 @@ function template_preprocess_internal_video(&$variables) {
   if ($size != 'responsive') {
     $dimensions = _internal_video_get_dimensions($size, $width, $height);
     // Assign the retrieved dimensions as attributes on the iframe element.
-    $variables['content_attributes']['width'] = $dimensions['width'];
-    $variables['content_attributes']['height'] = $dimensions['height'];
+    $variables['settings']['video_width'] = $dimensions['width'];
+    $variables['settings']['video_height'] = $dimensions['height'];
   }
-
-  $variables['attributes']['class'][] = 'video-container';
-  if ($size == 'responsive') {
+  else {
     // When the "responsive" size is chosen in the field's display settings,
     // this class is used by the module's CSS to make the player responsive.
     $variables['attributes']['class'][] = 'video-container--responsive';
   }
+
+  $variables['attributes']['class'][] = 'video-container';
 }
 
 /**
