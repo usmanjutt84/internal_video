@@ -29,7 +29,7 @@ class Tracking extends ControllerBase {
    *
    * @var \Drupal\Core\Database\Connection
    */
-  protected  $database;
+  protected Connection $database;
 
   /**
    * Constructor for Tracking.
@@ -50,9 +50,9 @@ class Tracking extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-    // Load the service required to construct this class.
+      // Load the service required to construct this class.
       $container->get('current_user'),
-      $container->get('database')
+      $container->get('database'),
     );
   }
 
@@ -73,7 +73,7 @@ class Tracking extends ControllerBase {
   }
 
   /**
-   * Find of the tracking is already in the database and return boolean value
+   * Find if the tracking is already in the database and return the boolean value
    *
    * @param array $tracking
    * @return boolean
