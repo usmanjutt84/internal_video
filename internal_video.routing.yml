@@ -5,3 +5,17 @@ internal_video.settings:
     _title: 'Internal video Settings'
   requirements:
     _permission: 'administer internal video'
+
+internal_video.tracking:
+  path: '/internal-video/tracking'
+  defaults:
+    _controller: '\Drupal\internal_video\Controller\Tracking::tracking'
+    _title: 'Video Tracking'
+  requirements:
+    _permission: 'access content'
+  methods:
+    - POST
+  options:
+    parameters:
+      tracking:
+        type: string
