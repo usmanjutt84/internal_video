@@ -19,9 +19,7 @@
           $(this, context).click(function () {
             setTimeout(function () {
               if (!video.paused) {
-                // Get current tracking
-                const tracking = internal_video_tracking[tracking_id];
-                Drupal.behaviors.internalVideoBehavior.tracking(tracking);
+                Drupal.behaviors.internalVideoBehavior.tracking(tracking_id);
               }
             }, internal_video_tracking['wait_time']);
           });
@@ -32,9 +30,15 @@
     /**
      * An AJAX call to POST the data
      */
-    tracking: function (tracking) {
+    tracking: function (tracking_id) {
+      const internal_video_tracking = drupalSettings.internal_video_tracking;
+      // Get current tracking
+      var tracking = internal_video_tracking ? internal_video_tracking[tracking_id] : false;
+
+      if(!tracking) return false;
+
       // Serialize the array to JSON format.
-      var tracking = JSON.stringify(tracking);
+      tracking = JSON.stringify(tracking);
 
       // An AJAX call to track
       $.ajax({
@@ -46,6 +50,11 @@
         },
         success: function (response) {
           console.log(response);
+          if(['not_authorized', 'already_tracked', 'video_is_tracked'].includes(response)) {
+            if(Object.hasOwn(internal_video_tracking, tracking_id)) {
+              delete internal_video_tracking[tracking_id];
+            }
+          }
         },
         error: function (error) {
           console.error(error);
