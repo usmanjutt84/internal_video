@@ -1,0 +1,4 @@
+services:
+  internal_video.tracking:
+    class: Drupal\internal_video\Controller\Tracking
+    arguments: ['@current_user', '@database']
