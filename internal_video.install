@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Internal video module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function internal_video_schema() {
+  $schema['internal_video_tracking'] = [
+    'description' => 'Internal video tracking',
+    'fields' => [
+      'tid' => [
+        'description' => 'Tracking ID.',
+        'type' => 'serial',
+        'not null' => TRUE,
+      ],
+      'uid' => [
+        'description' => "User's {users}.uid.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'entity_type' => [
+        'description' => "The entity type of where video was attached.",
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'entity_bundle' => [
+        'description' => "The entity bundle of where video was attached.",
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'entity_id' => [
+        'description' => "The entity ID of where video was attached.",
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'field_name' => [
+        'description' => "The fied name where video is attached.",
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'video_uri' => [
+        'description' => "The video URI that is being tracked.",
+        'type' => 'varchar',
+        'length' => 2048,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'timestamp' => [
+        'description' => 'A Unix timestamp indicating when the challenge was generated.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['tid'],
+  ];
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Update for version 2.0.0 of internal_video.
+ */
+function internal_video_update_8001() {
+  $database = \Drupal::database();
+  $database_schema = $database->schema();
+  $schema = internal_video_schema();
+
+  // Create the new table
+  $database_schema->createTable('internal_video_tracking', $schema['internal_video_tracking']);
+}

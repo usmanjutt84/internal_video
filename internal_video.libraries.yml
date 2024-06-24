@@ -5,3 +5,36 @@ internal_video.videojs:
       /libraries/video.js/dist/video-js.css: {}
   js:
     /libraries/video.js/dist/video.min.js: {}
+
+internal_video.theme.city:
+  version: VERSION
+  css:
+    theme:
+      /libraries/videojs-themes/city/index.css: {}
+
+internal_video.theme.fantasy:
+  version: VERSION
+  css:
+    theme:
+      /libraries/videojs-themes/fantasy/index.css: {}
+
+internal_video.theme.forest:
+  version: VERSION
+  css:
+    theme:
+      /libraries/videojs-themes/forest/index.css: {}
+
+internal_video.theme.sea:
+  version: VERSION
+  css:
+    theme:
+      /libraries/videojs-themes/sea/index.css: {}
+
+internal_video.tracking:
+  version: VERSION
+  js:
+    js/tracking.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/once

@@ -3,6 +3,7 @@
 namespace Drupal\internal_video\Plugin\Field\FieldType;
 
 use Drupal\Core\Field\FieldItemBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 
@@ -18,12 +19,15 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
  * )
  */
 class InternalVideo extends FieldItemBase {
+
   /**
-   * Definitions of the contained properties.
-   *
-   * @var array
+   * {@inheritdoc}
    */
-  public static $propertyDefinitions;
+  public static function defaultFieldSettings() {
+    return [
+      'tracking' => false,
+    ] + parent::defaultFieldSettings();
+  }
 
   /**
    * {@inheritdoc}
@@ -39,6 +43,22 @@ class InternalVideo extends FieldItemBase {
         ],
       ],
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
+    $element = [];
+
+    $element['tracking'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable tracking'),
+      '#default_value' => $this->getSetting('tracking'),
+      '#description' => $this->t('Enable tracking of internal videos.'),
+    ];
+
+    return $element;
   }
 
   /**

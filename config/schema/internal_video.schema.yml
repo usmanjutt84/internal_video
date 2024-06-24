@@ -10,6 +10,9 @@ internal_video.settings:
     allowed_extensions:
       type: string
       label: 'Comma separated list of allowed extensions'
+    wait_time:
+      type: number
+      label: 'Time to wait before tracking the video'
 
 field.widget.settings.internal_video:
   type: mapping
@@ -47,6 +50,3 @@ field.formatter.settings.internal_video:
     video_autohide:
       type: boolean
       label: 'Hide video controls after play begins'
-    video_load_policy: # TODO: Remove?
-      type: boolean
-      label: 'Hide video annotations by default'
