@@ -2,6 +2,7 @@
 
 namespace Drupal\internal_video\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -119,8 +120,21 @@ class InternalVideoDefaultFormatter extends FormatterBase {
       $unique_id = $tracking_info && !$already_tracked ? uniqid() : null;
 
       $src = $item->value;
-      $headers = get_headers($src, true);
+      $context = stream_context_create([
+        'http' => ['method' => 'HEAD']
+      ]);
+      $headers = get_headers($src, true, $context);
+
+      if(str_contains($headers[0], '404')) {
+        return [
+          '#markup' => Markup::create($this->t('Video is not available.')),
+        ];
+      }
       $mime_type = $headers['Content-Type'];
+
+      if(!$mime_type) {
+        $mime_type = 'video/mp4'; //set default mime type
+      }
 
       $element[$delta] = [
         '#theme' => 'internal_video',
