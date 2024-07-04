@@ -121,4 +121,22 @@ class Tracking extends ControllerBase {
       return 'video_could_not_be_tracked';
     }
   }
+
+  /**
+   * Get number of tracking by uid
+   * @param int $uid
+   * @param array $options (optional)
+   * @return int
+   */
+  public function getCountsByUid(int $uid, array $options = []) {
+    $query = $this->database->select(self::TABLE_NAME, 'tracking')->condition('tracking.uid', $uid)->fields('tracking');
+
+    if($options) {
+      foreach ($options as $column => $value) {
+        $query->condition("tracking.".$column, $value, '=');
+      }
+    }
+
+    return $query->countQuery()->execute()->fetchField();
+  }
 }
